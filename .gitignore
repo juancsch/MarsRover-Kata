@@ -1,3 +1,5 @@
+.idea
+
 # Ignore Gradle project files
 .gradle
 gradle/
