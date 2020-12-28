@@ -1,0 +1,16 @@
+{
+	"name": "MarsRover",
+	"version": "0.1.0",
+	"description": "Kata MarsRover",
+	"author": "juanc",
+	"license": "MIT",
+	"main": "",
+	"scripts": {
+		"test": "jest",
+		"tdd": "jest -w"
+	},
+	"devDependencies": {
+		"jest": "^25.2.7",
+		"standard": "^14.3.3"
+	}
+}
