@@ -1,8 +1,10 @@
 .idea
 
-# Ignore Gradle project files
+target
+project
+
 .gradle
-gradle/
+gradle
 build
 
 
