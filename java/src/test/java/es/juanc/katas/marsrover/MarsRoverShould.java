@@ -33,8 +33,16 @@ class MarsRoverShould {
 
     static Stream<Arguments> starLocationCommandsAndExpectedLocation() {
         return Stream.of(
-                arguments(Location.of(0, 0, E), new String[] {""}, Location.of(0, 0, E)),
-                arguments(Location.of(0, 0, E), new String[] {"f"}, Location.of(1, 0, E))
+                arguments(Location.of(0, 0, EAST), new String[] {}, Location.of(0, 0, EAST)),
+                arguments(Location.of(0, 0, EAST), new String[] {"F"}, Location.of(1, 0, EAST)),
+                arguments(Location.of(0, 0, NORTH), new String[] {"f"}, Location.of(0, 1, NORTH)),
+                arguments(Location.of(1, 1, WEST), new String[] {"F"}, Location.of(0, 1, WEST)),
+                arguments(Location.of(1, 1, SOUTH), new String[] {"f"}, Location.of(1, 0, SOUTH)),
+                arguments(Location.of(1, 1, EAST), new String[] {"B"}, Location.of(0, 1, EAST)),
+                arguments(Location.of(1, 1, NORTH), new String[] {"b"}, Location.of(1, 0, NORTH)),
+                arguments(Location.of(0, 0, WEST), new String[] {"B"}, Location.of(1, 0, WEST)),
+                arguments(Location.of(0, 0, SOUTH), new String[] {"b"}, Location.of(0, 1, SOUTH)),
+                arguments(Location.of(1, 1, NORTH), new String[] {"b", "F", "f"}, Location.of(1, 2, NORTH))
         );
     }
 }

@@ -10,4 +10,20 @@ import lombok.ToString;
 public class Point {
 	public final int x;
 	public final int y;
+
+	public Point addX() {
+		return Point.of(x + 1, y);
+	}
+
+	public Point addY() {
+		return Point.of(x, y + 1);
+	}
+
+	public Point lessX() {
+		return Point.of(x - 1, y);
+	}
+
+	public Point lessY() {
+		return Point.of(x, y - 1);
+	}
 }
