@@ -1,60 +1,33 @@
 package es.juanc.katas.marsrover;
 
-import static es.juanc.katas.marsrover.Direction.EAST;
-import static es.juanc.katas.marsrover.Direction.NORTH;
-import static es.juanc.katas.marsrover.Direction.SOUTH;
-import static es.juanc.katas.marsrover.Direction.WEST;
-
 public enum Command {
 
 	FORWARD {
 		public Location executeOn(Location location) {
-
-			if (location.facing == EAST) {
-				return location.withPosition(location.position.addX());
-			}
-
-			if (location.facing == NORTH) {
-				return location.withPosition(location.position.addY());
-			}
-
-			if (location.facing == WEST) {
-				return location.withPosition(location.position.lessX());
-			}
-
-			if (location.facing == SOUTH) {
-				return location.withPosition(location.position.lessY());
-			}
-
-			throw new IllegalStateException("Unknown facing location: " + location.facing);
+			return location.forward();
 		}
 	},
 	BACKWARD {
 		public Location executeOn(Location location) {
-
-			if (location.facing == EAST) {
-				return location.withPosition(location.position.lessX());
-			}
-
-			if (location.facing == NORTH) {
-				return location.withPosition(location.position.lessY());
-			}
-
-			if (location.facing == WEST) {
-				return location.withPosition(location.position.addX());
-			}
-
-			if (location.facing == SOUTH) {
-				return location.withPosition(location.position.addY());
-			}
-
-			throw new IllegalStateException("Unknown facing location: " + location.facing);
+			return location.backward();
+		}
+	},
+	RIGHT {
+		public Location executeOn(Location location) {
+			return location.right();
+		}
+	},
+	LEFT {
+		public Location executeOn(Location location) {
+			return location.left();
 		}
 	};
 
 	public static Command of(String key) {
 		if ("F".equalsIgnoreCase(key)) return FORWARD;
 		if ("B".equalsIgnoreCase(key)) return BACKWARD;
+		if ("R".equalsIgnoreCase(key)) return RIGHT;
+		if ("L".equalsIgnoreCase(key)) return LEFT;
 		throw new IllegalArgumentException("Unknown command key: " + key);
 	}
 
