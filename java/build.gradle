@@ -22,14 +22,14 @@ dependencies {
     implementation 'io.vavr:vavr:0.10.3'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+    testImplementation 'org.mockito:mockito-core:3.6.28'
     testImplementation 'org.assertj:assertj-core:3.18.1'
 }
 
 application {
-    mainClassName = 'es.juanc.katas.marsrover.App'
+    mainClassName = 'es.juanc.katas.marsrover.GroundControl'
 }
 
 test {
