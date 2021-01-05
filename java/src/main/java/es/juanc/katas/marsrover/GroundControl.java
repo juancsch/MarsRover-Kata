@@ -3,6 +3,8 @@ package es.juanc.katas.marsrover;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+import io.vavr.collection.List;
+
 import static es.juanc.katas.marsrover.Direction.EAST;
 import static es.juanc.katas.marsrover.Direction.NORTH;
 import static es.juanc.katas.marsrover.Direction.SOUTH;
@@ -15,13 +17,14 @@ public class GroundControl {
 
 	public static void main(String[] args) {
 
-		var rover = new MarsRover(0, 0, NORTH, World.of(COLUMNS, FILES));
+		var obstacles = List.of(Point.of(5, 5));
+		var rover = new MarsRover(0, 0, NORTH, World.of(COLUMNS, FILES, obstacles));
 
 		Scanner scanner = new Scanner(System.in);
 		var commands = "";
 
 		while (true) {
-            paintWorldAnd(rover.location());
+            paintWorldAnd(rover.location(), obstacles);
 
 			System.out.print("Enter commands: ");
 			commands = scanner.nextLine();
@@ -34,19 +37,26 @@ public class GroundControl {
 	private static final int COLUMNS = 10;
 	private static final int FILES = 10;
 
-    private static void paintWorldAnd(Location location) {
+    private static void paintWorldAnd(Location roverLocation, List<Point> obstacles) {
 
-    	view.println(location);
+    	view.println(roverLocation);
 
         for (int file = 0; file < FILES; file++) {
 	        view.print("|");
             for (int colunm = 0; colunm < COLUMNS; colunm++) {
-	            var pixel = roverAreThere(location.position, colunm, file) ? paintRover(location.facing) : " |";
-            	view.print(pixel);
+	            view.print(
+	            		roverAreThere(colunm, file, roverLocation.position) ?
+		                        paintRover(roverLocation.facing) :
+		                        paintCell(colunm, file, obstacles)
+	            );
             }
 	        view.println("");
         }
     }
+
+	private static boolean roverAreThere(int column, int file, Point roverLoc) {
+		return column == roverLoc.x && file == roverLoc.y;
+	}
 
     private static String paintRover(Direction direction) {
     	return Match(direction).of(
@@ -57,7 +67,7 @@ public class GroundControl {
 	    );
     }
 
-    private static boolean roverAreThere(Point position, int column, int file) {
-	    return column == position.x && file == position.y;
-    }
+	private static String paintCell(int column, int file, List<Point> obstacles) {
+		return obstacles.find(ob -> ob.x == column && ob.y == file).isDefined() ? "*|" : " |";
+	}
 }

@@ -1,12 +1,14 @@
 package es.juanc.katas.marsrover;
 
 import io.vavr.collection.List;
+import lombok.extern.slf4j.Slf4j;
 
 import static es.juanc.katas.marsrover.Direction.EAST;
 import static es.juanc.katas.marsrover.Direction.NORTH;
 import static es.juanc.katas.marsrover.Direction.SOUTH;
 import static es.juanc.katas.marsrover.Direction.WEST;
 
+@Slf4j
 public class MarsRover {
 
 	private Point position;
@@ -23,18 +25,26 @@ public class MarsRover {
 
 		if (commands.length == 0) return;
 
-		List.of(commands)
-		    .map(String::toUpperCase)
-		    .forEach(this::execute);
+		try {
+			List.of(commands)
+				.map(String::toUpperCase)
+				.forEach(this::execute);
+		} catch (ObstacleFoundException ofe) {
+			log.info(ofe.getMessage());
+		}
 	}
 
 	private void execute(String command) {
 		switch (command) {
 			case "F":
-				position = forward();
+				var nextLocationFW = forward();
+				world.checkObstacleIn(nextLocationFW);
+				position = nextLocationFW;
 				break;
 			case "B":
-				position = backward();
+				var nextLocationBW = backward();
+				world.checkObstacleIn(nextLocationBW);
+				position = nextLocationBW;
 				break;
 			case "R":
 				facing = right();

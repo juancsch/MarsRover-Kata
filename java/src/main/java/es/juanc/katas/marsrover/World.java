@@ -11,7 +11,9 @@ public class World {
 	public final int height;
 	public final List<Point> obstacles;
 
-	public static World of(int width, int height) {
-		return of(width, height, List.of());
+	public void checkObstacleIn(Point position) {
+		if (obstacles.find(p -> p.x == position.x && p.y == position.y).isDefined()) {
+			throw new ObstacleFoundException("There are a obstacle in: " + position);
+		}
 	}
 }

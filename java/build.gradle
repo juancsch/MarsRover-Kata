@@ -19,6 +19,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
+    implementation 'org.slf4j:slf4j-api:1.7.18'
+    implementation 'org.slf4j:slf4j-simple:1.7.21'
+
     implementation 'io.vavr:vavr:0.10.3'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'

@@ -2,6 +2,8 @@ package es.juanc.katas.marsrover;
 
 import java.util.stream.Stream;
 
+import io.vavr.collection.List;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -71,6 +73,29 @@ class MarsRoverShould {
                 arguments(9, 0, WEST, new String[] {"b"}, 0, 0, WEST),
                 arguments(0, 0, SOUTH, new String[] {"f"}, 0, 9, SOUTH),
                 arguments(0, 9, SOUTH, new String[] {"b"}, 0, 0, SOUTH)
+        );
+    }
+
+    @Test
+    void commands_process_are_interrupted_when_ostacle_are_found() {
+
+        // given
+        var x = 0; var y = 0;
+        var facing = EAST;
+        var rover = new MarsRover(
+                x, y, facing,
+                World.of(10, 10, List.of(Point.of(1, 0)))
+        );
+
+        // when
+        rover.commands("F");
+        Location actualLocation = rover.location();
+
+        // then
+        assertThat(
+                actualLocation
+        ).isEqualTo(
+                Location.of(Point.of(x, y), facing)
         );
     }
 }
