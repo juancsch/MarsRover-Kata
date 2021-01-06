@@ -3,6 +3,7 @@ package es.juanc.katas.marsrover;
 import java.util.stream.Stream;
 
 import io.vavr.collection.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,7 +26,7 @@ class MarsRoverShould {
         // given
         var rover = new MarsRover(
                 x, y, facing,
-                World.of(10, 10)
+                World.of(10, 10, List.empty())
         );
 
         // when
@@ -77,7 +78,7 @@ class MarsRoverShould {
     }
 
     @Test
-    void commands_process_are_interrupted_when_ostacle_are_found() {
+    void commands_process_are_interrupted_when_obstacle_are_found() {
 
         // given
         var x = 0; var y = 0;

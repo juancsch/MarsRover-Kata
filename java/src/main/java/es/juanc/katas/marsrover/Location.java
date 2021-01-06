@@ -3,7 +3,9 @@ package es.juanc.katas.marsrover;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.With;
 
+@With
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor(staticName = "of")

@@ -3,21 +3,14 @@ package es.juanc.katas.marsrover;
 import io.vavr.collection.List;
 import lombok.extern.slf4j.Slf4j;
 
-import static es.juanc.katas.marsrover.Direction.EAST;
-import static es.juanc.katas.marsrover.Direction.NORTH;
-import static es.juanc.katas.marsrover.Direction.SOUTH;
-import static es.juanc.katas.marsrover.Direction.WEST;
-
 @Slf4j
 public class MarsRover {
 
-	private Point position;
-	private Direction facing;
+	private Location location;
 	private final World world;
 
 	public MarsRover(int x, int y, Direction facing, World world) {
-		this.position = Point.of(x, y);
-		this.facing = facing;
+		this.location = Location.of(Point.of(x, y), facing);
 		this.world = world;
 	}
 
@@ -26,123 +19,15 @@ public class MarsRover {
 		if (commands.length == 0) return;
 
 		try {
-			List.of(commands)
-				.map(String::toUpperCase)
-				.forEach(this::execute);
+			location = List.of(commands)
+				.map(Command::of)
+				.foldLeft(location, (loc, cmd) -> cmd.executeOn(loc, world));
 		} catch (ObstacleFoundException ofe) {
 			log.info(ofe.getMessage());
 		}
 	}
 
-	private void execute(String command) {
-		switch (command) {
-			case "F":
-				var nextLocationFW = forward();
-				world.checkObstacleIn(nextLocationFW);
-				position = nextLocationFW;
-				break;
-			case "B":
-				var nextLocationBW = backward();
-				world.checkObstacleIn(nextLocationBW);
-				position = nextLocationBW;
-				break;
-			case "R":
-				facing = right();
-				break;
-			case "L":
-				facing = left();
-				break;
-			default: throw new IllegalArgumentException(
-					String.format("Unknown command key: %s", command)
-			);
-		}
-	}
-
-	private Point forward() {
-
-		if (facing == EAST) {
-			return position.forwardX(world.width);
-		}
-
-		if (facing == NORTH) {
-			return position.forwardY(world.height);
-		}
-
-		if (facing == WEST) {
-			return position.backwardX(world.width);
-		}
-
-		if (facing == SOUTH) {
-			return position.backwardY(world.height);
-		}
-
-		throw new IllegalStateException("Unknown facing location: " + facing);
-	}
-
-	private Point backward() {
-
-		if (facing == EAST) {
-			return position.backwardX(world.width);
-		}
-
-		if (facing == NORTH) {
-			return position.backwardY(world.height);
-		}
-
-		if (facing == WEST) {
-			return position.forwardX(world.width);
-		}
-
-		if (facing == SOUTH) {
-			return position.forwardY(world.height);
-		}
-
-		throw new IllegalStateException("Unknown facing location: " + facing);
-	}
-
-	private Direction right() {
-
-		if (facing == EAST) {
-			return SOUTH;
-		}
-
-		if (facing == NORTH) {
-			return EAST;
-		}
-
-		if (facing == WEST) {
-			return NORTH;
-		}
-
-		if (facing == SOUTH) {
-			return WEST;
-		}
-
-		throw new IllegalStateException("Unknown facing location: " + facing);
-	}
-
-	private Direction left() {
-
-		if (facing == EAST) {
-			return NORTH;
-		}
-
-		if (facing == NORTH) {
-			return WEST;
-		}
-
-		if (facing == WEST) {
-			return SOUTH;
-		}
-
-		if (facing == SOUTH) {
-			return EAST;
-		}
-
-		throw new IllegalStateException("Unknown facing location: " + facing);
-	}
-
 	public Location location() {
-		return Location.of(position, facing);
+		return location;
 	}
 }

@@ -16,19 +16,19 @@ public class Point {
 	public final int x;
 	public final int y;
 
-	public Point forwardX(int lim) {
+	public Point addX(int lim) {
 		return withX(inLimits(x + STEP_UNIT, lim));
 	}
 
-	public Point backwardX(int lim) {
+	public Point lessX(int lim) {
 		return withX(inLimits(x - STEP_UNIT, lim));
 	}
 
-	public Point forwardY(int lim) {
+	public Point addY(int lim) {
 		return withY(inLimits(y + STEP_UNIT, lim));
 	}
 
-	public Point backwardY(int lim) {
+	public Point lessY(int lim) {
 		return withY(inLimits(y - STEP_UNIT, lim));
 	}
 

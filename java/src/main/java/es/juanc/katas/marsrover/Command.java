@@ -3,23 +3,27 @@ package es.juanc.katas.marsrover;
 public enum Command {
 
 	FORWARD {
-		public Location executeOn(Location location) {
-			return location.forward();
+		public Location executeOn(Location location, World world) {
+			var nextPosition = location.facing.forward(location.position, world);
+			world.checkObstacleIn(nextPosition);
+			return location.withPosition(nextPosition);
 		}
 	},
 	BACKWARD {
-		public Location executeOn(Location location) {
-			return location.backward();
+		public Location executeOn(Location location, World world) {
+			var nextPosition = location.facing.backward(location.position, world);
+			world.checkObstacleIn(nextPosition);
+			return location.withPosition(nextPosition);
 		}
 	},
 	RIGHT {
-		public Location executeOn(Location location) {
-			return location.right();
+		public Location executeOn(Location location, World world) {
+			return location.withFacing(location.facing.right());
 		}
 	},
 	LEFT {
-		public Location executeOn(Location location) {
-			return location.left();
+		public Location executeOn(Location location, World world) {
+			return location.withFacing(location.facing.left());
 		}
 	};
 
@@ -31,5 +35,5 @@ public enum Command {
 		throw new IllegalArgumentException("Unknown command key: " + key);
 	}
 
-	public abstract Location executeOn(Location location);
+	public abstract Location executeOn(Location location, World world);
 }
