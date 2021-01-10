@@ -2,9 +2,7 @@ package es.juanc.katas.marsrover;
 
 import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@ToString
 @RequiredArgsConstructor(staticName = "of")
 public class World {
 	public final int width;
