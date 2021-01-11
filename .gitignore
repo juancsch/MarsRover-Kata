@@ -1,10 +1,12 @@
 .idea
+*.iml
 
-target
-project
+scala/project
+scala/target
 
-.gradle
-gradle
-build
+java/.gradle
+java/gradle
+java/gradlew*
+java/build
 
-
+javascript/node_modules
